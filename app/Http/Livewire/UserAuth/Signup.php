@@ -39,7 +39,7 @@ class Signup extends Component
 
         $is_email = User::where("email", $this->email)->first();
         if ($is_email) {
-            dd("Email allready exist");
+            session()->flash('message','Email already Exist');
         } else {
             $filename = "";
             if ($this->file != "") {
@@ -54,12 +54,13 @@ class Signup extends Component
             $user->image = $filename;
             $user->password = Hash::make($this->password);
             $result = $user->save();
-            dd($result);
-            // if($result){
-            //     dd("data add Successfully");
-            // }else{
-            //     dd("something woing");
-            // }
+            if($result){
+                session()->flash('message','Registration successfully Now you login');
+                return redirect(route('login'));
+            }else{
+                session()->flash('message','Something Woring');
+
+            }
 
         }
     }

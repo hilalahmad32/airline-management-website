@@ -39,6 +39,15 @@ class FlightDetail extends Component
         return view('livewire.pages.flight-detail')->layout('layouts.app');
     }
 
+    public function resetField()
+    {
+        $this->kg="";
+    $this->seat="";
+
+    $this->review="";
+    $this->comment="";
+    }
+
     public function bookFlight($id)
     {
         $flight=new BookFlight();
@@ -48,7 +57,7 @@ class FlightDetail extends Component
         ]);
         $is_flight=BookFlight::where(['user_id'=>Auth::user()->id,'flight_id'=>$id])->first();
         if($is_flight){
-            ddd(Auth::user()->username.' you already book this plane');
+            session()->flash('exist',Auth::user()->username.' you already book this plane');
         }else{
             $flight->user_id=Auth::user()->id;
             $flight->flight_id=$id;
@@ -56,7 +65,8 @@ class FlightDetail extends Component
             $flight->wait=$this->kg;
             $result=$flight->save();
             if($result){
-                ddd('Plane Add Successfully');
+                $this->resetField();
+                session()->flash('success',"{$flight->name} is Booked Successfully");
             }
         }
     }
@@ -73,9 +83,10 @@ class FlightDetail extends Component
         $review->review=$this->review;
         $review->comment=$this->comment;
         $result=$review->save();
-        // if($result){
-        //     ddd("review add successfully");
-        // }
+        if($result){
+            $this->resetField();
+            session()->flash('review',"Review Add Successfully Admin will approve your reivew is pending...");
+        }
 
     }
 

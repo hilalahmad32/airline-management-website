@@ -1,7 +1,8 @@
 <div>
     <x-slot name="title">{{$flightDetail->name}}</x-slot>
-    <div class="site-blocks-cover inner-page-cover" style="background-image: url({{asset('storage')}}/{{$flightDetail->image}});"
-        data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="site-blocks-cover inner-page-cover"
+        style="background-image: url({{asset('storage')}}/{{$flightDetail->image}});" data-aos="fade"
+        data-stellar-background-ratio="0.5">
         <div class="container">
             <div class="row align-items-center justify-content-center text-center">
 
@@ -27,10 +28,11 @@
                     20 kg wait a allowed after That you will pay per 1kg $20
                 </h6>
                 @auth
-                <button wire:click='like({{$flightDetail->id}})' class="btn btn-primary">Like  ( {{$total_likes}} )</button>
+                <button wire:click='like({{$flightDetail->id}})' class="btn btn-primary">Like ( {{$total_likes}}
+                    )</button>
                 @endauth
                 @guest
-                <a href="{{ route('login') }}" class="btn btn-primary">Like  ( {{$total_likes}} )</a>
+                <a href="{{ route('login') }}" class="btn btn-primary">Like ( {{$total_likes}} )</a>
                 @endguest
             </div>
             <div class="col-xl-6 col-md-6 col-sm-12">
@@ -43,7 +45,18 @@
                     echo $flightDetail->description;
                     @endphp
                 </p>
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        {{session('success')}}
+                    </div>
+                    @endif
+                    @if (session()->has('exist'))
+                    <div class="alert alert-info">
+                        {{session('exist')}}
+                    </div>
+                    @endif
                 <div class="row form-group">
+                    
                     <div class="col-md-6 mb-3 mb-md-0">
                         <label class="text-black" for="seat">Seats</label>
                         <select name="seat" wire:model='seat' id="seat" class="form-control">
@@ -58,6 +71,7 @@
                             @enderror</span>
                     </div>
                     <div class="col-md-6 mb-3 mb-md-0">
+                      
                         <label class="text-black" for="wait">Wait in Kg (20)</label>
                         <input type="number" name="kg" wire:model='kg' id="kg" class="form-control">
                         <span class="text-danger">@error('kg')
@@ -74,6 +88,11 @@
 
             </div>
         </div>
+        @if (session()->has('review'))
+        <div class="alert alert-success">
+            {{session('review')}}
+        </div>
+        @endif
         <form action="" wire:submit.prevent='submit_comment({{$flightDetail->id}})'>
             <label class="text-black" for="review">Enter reviews</label>
             <select name="review" wire:model='review' id="review" class="form-control">
@@ -97,7 +116,7 @@
             </div>
 
             @auth
-            <button wire:click='like({{$blogDetail->id}})' class="btn btn-primary my-3">Submit</button>
+            <button type="submit" class="btn btn-primary my-3">Submit</button>
             @endauth
 
             @guest

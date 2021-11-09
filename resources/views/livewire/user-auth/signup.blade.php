@@ -15,6 +15,12 @@
         </div>
     </div>
     <div class="container">
+        @if (session()->has('message'))
+        <div class="alert alert-success mt-3">
+            {{session('message')}}
+        </div>
+        @endif
+
         <h1 class="text-center my-3">Registration From</h1>
 
         <div class="row">

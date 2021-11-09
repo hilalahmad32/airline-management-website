@@ -28,12 +28,11 @@
                         <h2 class="font-size-regular"><a wire:click='incrementView({{$post->id}})'
                                 href="{{ route('blogdetail', ['slug'=>$post->slug]) }}">{{$post->title}}</a></h2>
                         <div class="meta mb-2">by Theresa Winston <span class="mx-2">&bullet;</span> Jan 18, 2019 at
-                            2:00 pm <span class="mx-2">&bullet;</span> <a href="#">News</a></div> 
+                            2:00 pm <span class="mx-2">&bullet;</span> <a href="#">{{$post->category->category_name}}</a></div> 
                             <div class="d-flex justify-content-between">
                             <span class="text-info">views ( {{$post->views}} )</span>
-                            <span class="text-info">Likes ( {{$post->views}} )</span>
                             </div>
-                        <p>{{$post->description}}</p>
+                        <p>{{substr($post->description,0,200)}}....</p>
                     </div>
                 </div>
                 @empty

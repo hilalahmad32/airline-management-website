@@ -24,9 +24,11 @@ class Login extends Component
         ]);
         $user=Auth::attempt(['email' => $this->email, 'password' => $this->password]);
         if($user){
+            session()->flash('success','User Login Successfully');
             return redirect("/");
         }else{
-            dd("invalid username and password");
+            session()->flash('error','Inavlid Username And Password');
+
         }
     }
 }
